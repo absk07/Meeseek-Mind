@@ -1,9 +1,17 @@
 "use client";
-import React, { JSX } from "react";
+import React, { JSX, useState } from "react";
 import Image from "next/image";
 import { assets } from "@/assets/assets";
 
-const PromptBox = (): JSX.Element => {
+interface PromptBoxProps {
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => {
+
+    const [prompt, setPrompt] = useState<string>("");
+
     return (
         <form className={`w-full ${false ? "max-w-3xl" : "max-w-2xl"} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
             <textarea
@@ -11,6 +19,8 @@ const PromptBox = (): JSX.Element => {
                 rows={2} 
                 placeholder="Ask Anything" 
                 required 
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
             />
             <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-2">
@@ -25,8 +35,8 @@ const PromptBox = (): JSX.Element => {
                 </div>
                 <div className="flex items-center gap-2">
                     <Image className="w-4 cursor-pointer" src={assets.pin_icon} alt="" />
-                    <button>
-                        <Image className="w-4 cursor-pointer" src={assets.pin_icon} alt="" />
+                    <button className={`${prompt ? "bg-primary" : "bg-[#71717a]"} rounded-full p-2 cursor-pointer`}>
+                        <Image className="w-3.5 aspect-square" src={prompt ? assets.arrow_icon : assets.arrow_icon_dull} alt="" />
                     </button>
                 </div>
             </div>
