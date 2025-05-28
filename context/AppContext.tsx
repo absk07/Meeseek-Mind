@@ -1,6 +1,6 @@
-"use client"
-import { useUser } from "@clerk/nextjs";
-import { createContext, ReactNode, useContext } from "react";
+'use client'
+import { useUser } from '@clerk/nextjs';
+import { createContext, ReactNode, useContext } from 'react';
 
 interface AppContextProviderProps {
   children: ReactNode;
