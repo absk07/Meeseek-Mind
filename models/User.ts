@@ -1,6 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface UserSchemaType {
+    user_id: string;
     name: string;
     email: string;
     image?: string;
@@ -9,6 +10,10 @@ interface UserSchemaType {
 type UserDocument = UserSchemaType & Document;
 
 const UserSchema: Schema<UserDocument> = new mongoose.Schema<UserDocument>({
+    user_id: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
