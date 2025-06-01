@@ -3,6 +3,7 @@ import connectDB from '@/config/db';
 import User from '@/models/User';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { log } from 'console';
 
 interface userDataInterface {
     user_id: string;
@@ -40,15 +41,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     let event: { data: ClerkUserPayload; eventType: string };
     try {
         const payload = await req.json();
+        console.log(payload)
         const body = JSON.stringify(payload)
         event = wh.verify(body, svixHeaders) as { data: ClerkUserPayload; eventType: string }
     } catch (err) {
+        console.log(err)
         return NextResponse.json({ 
             error: err 
         });
     }
 
     const { data, eventType } = event;
+
+    console.log(data, eventType)
     
     // save user data in db
     const userData: userDataInterface = {
@@ -57,6 +62,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         name: `${data.first_name} ${data.last_name}`,
         image: data.image_url
     };
+
+    console.log(userData)
+    
     await connectDB();
 
     switch(eventType) {
