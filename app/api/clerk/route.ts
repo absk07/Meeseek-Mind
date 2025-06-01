@@ -3,7 +3,6 @@ import connectDB from '@/config/db';
 import User from '@/models/User';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { log } from 'console';
 
 interface userDataInterface {
     user_id: string;
@@ -64,7 +63,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     };
 
     console.log(userData)
-    
+
     await connectDB();
 
     switch(eventType) {
