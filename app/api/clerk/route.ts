@@ -11,6 +11,16 @@ interface userDataInterface {
     image?: string;
 }
 
+interface ClerkUserPayload {
+  id: string;
+  first_name: string;
+  last_name: string;
+  image_url?: string;
+  email_addresses: {
+    email_address: string;
+  }[];
+}
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
     const signingSecret = process.env.SIGNING_SECRET;
     if (!signingSecret) {
@@ -27,14 +37,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     };
 
     // get the payload and verify it
-    let event: { data: any; eventType: string };
+    let event: { data: ClerkUserPayload; eventType: string };
     try {
         const payload = await req.json();
         const body = JSON.stringify(payload)
-        event = wh.verify(body, svixHeaders) as { data: any; eventType: string }
-    } catch (error) {
+        event = wh.verify(body, svixHeaders) as { data: ClerkUserPayload; eventType: string }
+    } catch (err) {
         return NextResponse.json({ 
-            error: 'Invalid webhook signature' 
+            error: err 
         });
     }
 

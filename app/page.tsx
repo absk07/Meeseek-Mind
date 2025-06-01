@@ -7,10 +7,16 @@ import Sidebar from '@/components/Sidebar';
 import PromptBox from '@/components/PromptBox';
 import Message from '@/components/Message';
 
+interface MessageProps {
+  role: 'user' | 'ai';
+  content: string;
+}
+
 export default function Home(): JSX.Element {
   const [expand, setExpand] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [messages, setMessages] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [messages, setMessages] = useState<MessageProps[]>([]);
 
   return (
     <div>

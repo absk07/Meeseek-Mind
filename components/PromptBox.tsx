@@ -8,6 +8,7 @@ interface PromptBoxProps {
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => {
 
     const [prompt, setPrompt] = useState<string>('');

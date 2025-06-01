@@ -12,6 +12,7 @@ interface ChatLabelProps {
   setOpenMenu: React.Dispatch<React.SetStateAction<OpenMenuType>>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatLabel = ({ openMenu, setOpenMenu }: ChatLabelProps): JSX.Element => {
     return (
         <div className='flex items-center justify-between p-2 text-white/80 hover:bg-white/10 rounded-lg text-sm group cursor-pointer'>
