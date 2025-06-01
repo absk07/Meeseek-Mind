@@ -52,7 +52,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const { data, eventType } = event;
 
-    console.log(data, eventType)
+    console.log({user_data: data, event_type: eventType})
     
     // save user data in db
     const userData: userDataInterface = {
@@ -68,7 +68,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     switch(eventType) {
         case 'user.created':
-            await User.create(userData);
+            const u = await User.create(userData);
+            console.log('User created', u)
             break;
         case 'user.updated':
             await User.findByIdAndUpdate(data.id, userData);
