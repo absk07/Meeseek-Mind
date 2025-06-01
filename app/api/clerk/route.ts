@@ -37,12 +37,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     };
 
     // get the payload and verify it
-    let event: { data: ClerkUserPayload; eventType: string };
+    let event: { data: ClerkUserPayload; type: string };
     try {
         const payload = await req.json();
         console.log(payload)
         const body = JSON.stringify(payload)
-        event = wh.verify(body, svixHeaders) as { data: ClerkUserPayload; eventType: string }
+        event = wh.verify(body, svixHeaders) as { data: ClerkUserPayload; type: string }
     } catch (err) {
         console.log(err)
         return NextResponse.json({ 
@@ -50,9 +50,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         });
     }
 
-    const { data, eventType } = event;
+    const { data, type } = event;
 
-    console.log({user_data: data, event_type: eventType})
+    console.log({user_data: data, event_type: type})
     
     // save user data in db
     const userData: userDataInterface = {
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     await connectDB();
 
-    switch(eventType) {
+    switch(type) {
         case 'user.created':
             const u = await User.create(userData);
             console.log('User created', u)
