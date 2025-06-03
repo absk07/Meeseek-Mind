@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
 
         await connectDB();
 
-        const chats = await Chat.findOne({ user_id: userId });        
+        const chats = await Chat.findOne({ userId });        
 
         return NextResponse.json({
             'success': true,
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     } catch(err) {
         return NextResponse.json({
             'success': false,
-            'error': err
+            'message': err
         });
     }    
 }

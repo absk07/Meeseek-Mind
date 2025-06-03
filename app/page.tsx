@@ -8,7 +8,7 @@ import PromptBox from '@/components/PromptBox';
 import Message from '@/components/Message';
 
 interface MessageProps {
-  role: 'user' | 'ai';
+  role: 'user' | 'assistant';
   content: string;
 }
 

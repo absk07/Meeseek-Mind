@@ -1,6 +1,6 @@
 'use client'
-import { useUser } from '@clerk/nextjs';
-import { createContext, ReactNode, useContext } from 'react';
+import { useAuth, useUser } from '@clerk/nextjs';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface AppContextProviderProps {
   children: ReactNode;
@@ -14,6 +14,12 @@ export const useAppContext = () => {
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const { user } = useUser();
+    const { getToken } = useAuth();
+
+    const [ chats, setChats ] = useState([]);
+    const [ selectedChat, setSelectedChat ] = useState(null);
+
+    
 
     const value: any = {
         user

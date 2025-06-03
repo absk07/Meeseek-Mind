@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
         await connectDB();
 
-        const chats = await Chat.findOneAndUpdate({ _id: chatId, userId }, { name });        
+        await Chat.findOneAndUpdate({ _id: chatId, userId }, { name });        
 
         return NextResponse.json({
             'success': true,
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     } catch(err) {
         return NextResponse.json({
             'success': false,
-            'error': err
+            'message': err
         });
     }    
 }
