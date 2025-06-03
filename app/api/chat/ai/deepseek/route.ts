@@ -11,8 +11,8 @@ interface promptInterface {
 }
 
 const openai = new OpenAI({
-    baseURL: process.env.BASE_URL,
-    apiKey: process.env.OPENROUTER_API_KEY
+    baseURL: process.env.BASE_URL || '',
+    apiKey: process.env.OPENROUTER_API_KEY || ''
 });
 
 export async function POST(req: NextRequest) {
