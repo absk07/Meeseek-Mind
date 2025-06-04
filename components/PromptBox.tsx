@@ -1,21 +1,133 @@
 'use client';
-import React, { JSX, useState } from 'react';
+import React, { FormEvent, JSX, KeyboardEvent, useState } from 'react';
 import Image from 'next/image';
 import { assets } from '@/assets/assets';
+import { useAppContext } from '@/context/AppContext';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 interface PromptBoxProps {
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface promptInterface {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: number;
+}
+
 const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => {
 
     const [prompt, setPrompt] = useState<string>('');
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { user, chats, setChats, selectedChat, setSelectedChat } = useAppContext();
+
+    const sendPrompt = async (e: FormEvent) => {
+        const promptCopy = prompt;
+        try {
+            e.preventDefault();
+
+            if(!user) return toast.error('Login to continue.');
+            if(isLoading) return toast.error('Waiting for previous response');
+
+            setIsLoading(true);
+            setPrompt('');
+
+            // save user prompt in chats array
+            const userPrompt: promptInterface = {
+                role: 'user',
+                content: promptCopy,
+                timestamp: Date.now()
+            };
+            setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat?._id ? {
+                    ...chat,
+                    messages: [...chat.messages, userPrompt]
+                } : chat
+            ));
+
+            // save user prompt in selected chat
+            setSelectedChat((prev) => {
+                if(!prev) return prev;
+                return {
+                    ...prev,
+                    messages: [...prev?.messages, userPrompt]
+                }
+            });
+
+            const { data } = await axios.post('/api/chat/ai/deepseek', {
+                chatId: selectedChat?._id,
+                prompt
+            });
+
+            if(data.success) {
+                setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat?._id ? {
+                    ...chat,
+                    messages: [...chat.messages, data.data]
+                } : chat
+                ));
+
+                const msg = data?.data?.content;
+                const msgTokens = msg?.split(' ');
+                const assistantMsg: promptInterface = {
+                    role: 'assistant',
+                    content: '',
+                    timestamp: Date.now()
+                }
+                setSelectedChat((prev) => {
+                    if(!prev) return prev;
+                    return {
+                        ...prev,
+                        messages: [...prev?.messages, assistantMsg]
+                    }
+                });
+
+                for(let i = 0; i < msgTokens?.length; i++) {
+                    setTimeout(() => {
+                        assistantMsg.content = msgTokens?.slice(0, i + 1).join(' ');
+                        setSelectedChat((prev) => {
+                            if(!prev) return prev;
+
+                            const updatedMsg = [
+                                ...prev.messages.slice(0, -1),
+                                assistantMsg
+                            ]
+
+                            return { ...prev, messages: updatedMsg }
+                        });
+                    }, i * 100)
+                }
+            } else {
+                console.log(data);
+                toast.error(data.message);
+                setPrompt(promptCopy);
+            }
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                toast.error(err.message);
+                console.error(err);
+                setPrompt(promptCopy);
+            } else {
+                toast.error('An unknown error occurred.');
+                console.error('Unknown error:', err);
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if(e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendPrompt(e);
+        }
+    }
+
     return (
-        <form className={`w-full ${false ? 'max-w-3xl' : 'max-w-2xl'} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
+        <form onSubmit={sendPrompt} className={`w-full ${selectedChat?.messages ? 'max-w-3xl' : 'max-w-2xl'} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
             <textarea
+                onKeyDown={handleKeyDown}
                 className='outline-none w-full resize-none overflow-hidden break-words bg-transparent'
                 rows={2} 
                 placeholder='Ask Anything' 

@@ -11,3 +11,70 @@ html {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.loader div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loader div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+
+pre {
+  border-radius: 10px;
+  overflow: auto;
+}
+
+/* General styling for the markdown container */
+.markdown-content {
+  line-height: 1.8; 
+  color: #fff;
+}
+
+/* Headings */
+.markdown-content h2 {
+  font-size: 1.8em;
+  color: #fff; /* A darker blue-gray */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eee; /* Subtle underline */
+  padding-bottom: 5px;
+}
+
+.markdown-content h3 {
+  font-size: 1.4em;
+  color: #fff; /* Slightly lighter than h2 */
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+/* Paragraphs */
+.markdown-content p {
+  margin-bottom: 1em;
+}
+
+/* Lists */
+.markdown-content ul {
+  list-style-type: disc; /* Or 'circle', 'square' */
+  margin-left: 25px;
+  padding-left: 0;
+  margin-bottom: 1em;
+}
+
+.markdown-content li {
+  margin-bottom: 0.5em;
+}
+
+/* Strong/Bold text */
+.markdown-content strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Inline Code */
+.markdown-content code {
+  background-color: #1e1e1e;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}

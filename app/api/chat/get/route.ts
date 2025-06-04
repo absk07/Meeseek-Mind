@@ -15,7 +15,8 @@ export async function GET(req: NextRequest) {
 
         await connectDB();
 
-        const chats = await Chat.findOne({ userId });        
+        const chats = await Chat.find({ userId });  
+        // console.log(chats)      
 
         return NextResponse.json({
             'success': true,
