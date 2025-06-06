@@ -61,15 +61,24 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                 prompt
             });
 
+            // console.log('api data', data)
+
             if(data.success) {
+                // console.log('inside data.success')
+                // console.log('before setChats', chats)
                 setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat?._id ? {
                     ...chat,
-                    messages: [...chat.messages, data.data]
+                    messages: [...chat.messages, data.data.messages.slice(-1)[0]]
                 } : chat
                 ));
+                // console.log('after setChats', chats)
 
-                const msg = data?.data?.content;
+
+                const msg = data?.data?.messages?.slice(-1)[0].content;
+                // console.log('real msg', msg)
                 const msgTokens = msg?.split(' ');
+                // console.log('token msg', msgTokens)
+
                 const assistantMsg: promptInterface = {
                     role: 'assistant',
                     content: '',
@@ -81,8 +90,8 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                         ...prev,
                         messages: [...prev?.messages, assistantMsg]
                     }
-                });
-
+                }); 
+                
                 for(let i = 0; i < msgTokens?.length; i++) {
                     setTimeout(() => {
                         assistantMsg.content = msgTokens?.slice(0, i + 1).join(' ');
@@ -139,7 +148,7 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                 <div className='flex items-center gap-2'>
                     <p className='flex items-center gap-2 text-xs border border-gray-300/40 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-500/20 transition'>
                         <Image className='h-5' src={assets.deepthink_icon} alt='' />
-                        DeepThink (R1)
+                        Switch Model
                     </p>
                     <p className='flex items-center gap-2 text-xs border border-gray-300/40 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-500/20 transition'>
                         <Image className='h-5' src={assets.search_icon} alt='' />
@@ -157,4 +166,4 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
     )
 }
 
-export default PromptBox
+export default PromptBox;
