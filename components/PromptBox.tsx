@@ -105,7 +105,7 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
 
                             return { ...prev, messages: updatedMsg }
                         });
-                    }, i * 100)
+                    }, i * 80)
                 }
             } else {
                 console.log(data);

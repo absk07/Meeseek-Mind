@@ -28,11 +28,12 @@ export async function POST(req: NextRequest) {
 
         await connectDB();
 
-        await Chat.create(chatData);
+        const chat = await Chat.create(chatData);
 
         return NextResponse.json({
             'success': true,
-            'message': 'Chat created.'
+            'message': 'Chat created.',
+            'data': chat
         });
     } catch(err) {
         return NextResponse.json({

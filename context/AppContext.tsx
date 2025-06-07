@@ -83,9 +83,10 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
                 chatList?.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
                 setChats(chatList);
 
-                if(data.data.length === 0) {
+                if(chatList.length === 0) {
+                    // console.log('AppContext')
                     await createNewChat();
-                    return getChats();
+                    getChats();
                 } else {
                     // console.log(chatList[0]);
                     setSelectedChat(chatList[0]);
