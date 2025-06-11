@@ -48,7 +48,10 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
     const createNewChat = async (): Promise<void> => {
         try {
-            if(!user) return;
+            if(!user) {
+                toast.error('Please Login to continue');
+                return;
+            }
 
             const token = await getToken();
             const { data } = await axios.post('/api/chat/create', {}, { 

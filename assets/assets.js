@@ -19,11 +19,30 @@ import regenerate_icon from "./regenerate_icon.svg";
 import sidebar_icon from "./sidebar_icon.svg";
 import sidebar_close_icon from "./sidebar_close_icon.svg";
 import chat_icon_dull from "./chat_icon_dull.svg";
-import qrcode from "./qrcode.png";
 import three_dots from "./three_dots.svg";
 import new_icon from "./new_icon.svg";
 
+import hamburger_sidebar_open from "./hamburger-sidebar-open.svg";
+import hamburger_open from "./hamburger-open.svg";
+import hamburger_close from "./hamburger-close.svg";
+import new_chat from "./chat-circle.svg";
+import hamburger_sidebar_close from "./hamburger-sidebar-close.svg";
+import new_chat_icon from "./new-chat-icom.svg";
+import new_chat_icon_dull from "./new-chat-icon-dull.svg";
+import enter_icon from "./enter.svg";
+import enter_icon_active from "./enter-active.svg";
+
 export const assets = {
+  hamburger_sidebar_open,
+  hamburger_sidebar_close,
+  new_chat,
+  new_chat_icon,
+  new_chat_icon_dull,
+  hamburger_open,
+  hamburger_close,
+  enter_icon,
+  enter_icon_active,
+
   arrow_icon,
   arrow_icon_dull,
   logo_text,
@@ -45,7 +64,6 @@ export const assets = {
   sidebar_icon,
   sidebar_close_icon,
   chat_icon_dull,
-  qrcode,
   three_dots,
   new_icon,
 };
