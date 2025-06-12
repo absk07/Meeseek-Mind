@@ -29,6 +29,8 @@ interface AppContextType {
   setSelectedChat: React.Dispatch<React.SetStateAction<Chat | null>>;
   getChats: () => Promise<void>;
   createNewChat: () => Promise<void>;
+  selectedModel: string;
+  setSelectedModel: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -45,6 +47,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
     const [ chats, setChats ] = useState<Chat[]>([]);
     const [ selectedChat, setSelectedChat ] = useState<Chat |null>(null);
+
+    const [selectedModel, setSelectedModel] = useState<string>('deepseek/deepseek-r1-distill-qwen-7b');
 
     const createNewChat = async (): Promise<void> => {
         try {
@@ -115,7 +119,9 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         selectedChat,
         setSelectedChat,
         getChats,
-        createNewChat
+        createNewChat,
+        selectedModel, 
+        setSelectedModel
     }
 
     return (

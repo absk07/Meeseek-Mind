@@ -1,5 +1,7 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
+import { assets } from '@/assets/assets';
 
 interface ConfirmModalProps {
     isOpen: boolean;
@@ -19,7 +21,7 @@ const ConfirmModal = ({ isOpen, onConfirm, onCancel, message }: ConfirmModalProp
                     onClick={onCancel}
                     className='absolute top-3 right-3 text-gray-500 hover:text-gray-700 cursor-pointer'
                 >
-                x
+                    <Image className='w-8 h-8 cursor-pointer' src={assets.cross_icon} alt='' />
                 </button>
 
                 {/* Heading */}

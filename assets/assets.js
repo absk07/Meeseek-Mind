@@ -31,6 +31,7 @@ import new_chat_icon from "./new-chat-icom.svg";
 import new_chat_icon_dull from "./new-chat-icon-dull.svg";
 import enter_icon from "./enter.svg";
 import enter_icon_active from "./enter-active.svg";
+import cross_icon from "./cross.svg"
 
 export const assets = {
   hamburger_sidebar_open,
@@ -42,6 +43,7 @@ export const assets = {
   hamburger_close,
   enter_icon,
   enter_icon_active,
+  cross_icon,
 
   arrow_icon,
   arrow_icon_dull,

@@ -1,10 +1,16 @@
 'use client';
-import React, { FormEvent, JSX, KeyboardEvent, useState } from 'react';
+import React, { FormEvent, JSX, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { assets } from '@/assets/assets';
 import { useAppContext } from '@/context/AppContext';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+
+const availableModels: { id: string; label: string }[] = [
+    { id: 'deepseek/deepseek-r1-distill-qwen-7b', label: 'DeepSeek Qwen 7B' },
+    { id: 'openai/gpt-4o', label: 'GPT-4o' },
+    { id: 'anthropic/claude-3-haiku', label: 'Claude 3 Haiku' },
+];
 
 interface PromptBoxProps {
     isLoading: boolean;
@@ -20,9 +26,14 @@ interface promptInterface {
 const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => {
 
     const [prompt, setPrompt] = useState<string>('');
+    const [modelDropdownOpen, setModelDropdownOpen] = useState<boolean>(false);
+    const [dropUp, setDropUp] = useState(false);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { user, chats, setChats, selectedChat, setSelectedChat } = useAppContext();
+    const { user, chats, setChats, selectedChat, setSelectedChat, selectedModel, setSelectedModel } = useAppContext();
 
     const sendPrompt = async (e: FormEvent) => {
         const promptCopy = prompt;
@@ -58,7 +69,8 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
 
             const { data } = await axios.post('/api/chat/ai/deepseek', {
                 chatId: selectedChat?._id,
-                prompt
+                prompt,
+                model: selectedModel
             });
 
             // console.log('api data', data)
@@ -133,6 +145,29 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
         }
     }
 
+    const toggleDropdown = () => {
+        if (buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            setDropUp(spaceBelow < 250); // 150px: estimated dropdown height
+            // console.log(dropUp)
+        }
+        setModelDropdownOpen(prev => !prev);
+    }
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setModelDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <form onSubmit={sendPrompt} className={`w-full ${selectedChat?.messages ? 'max-w-3xl' : 'max-w-2xl'} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
             <textarea
@@ -145,11 +180,30 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                 onChange={(e) => setPrompt(e.target.value)}
             />
             <div className='flex items-center justify-between text-sm'>
-                <div className='flex items-center gap-2'>
-                    <p className='flex items-center gap-2 text-xs border border-gray-300/40 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-500/20 transition'>
+                <div ref={dropdownRef} className='relative flex items-center gap-2'>
+                    <button 
+                        type="button"
+                        ref={buttonRef}
+                        onClick={toggleDropdown} 
+                        className='flex items-center gap-2 text-xs border border-gray-300/40 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-500/20 transition'
+                    >
                         <Image className='h-5' src={assets.deepthink_icon} alt='' />
-                        Switch Model
-                    </p>
+                        {availableModels.find(m => m.id === selectedModel)?.label || 'Switch Model'}
+                    </button>
+                    {modelDropdownOpen && (
+                        <ul className={`absolute top-10 left-0 z-10 bg-[#212327] text-white rounded-xl shadow-lg w-45 ${dropUp ? 'top-auto bottom-full mb-4' : 'top-10'}`}>
+                            {availableModels.map(model => (
+                                <li key={model.id} 
+                                    onClick={() => {
+                                        setSelectedModel(model.id);
+                                        setModelDropdownOpen(false);
+                                    }}
+                                    className='px-4 py-2 hover:bg-[#404045] cursor-pointer rounded-xl'>
+                                    {model.label}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                     <p className='flex items-center gap-2 text-xs border border-gray-300/40 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-500/20 transition'>
                         <Image className='h-5' src={assets.search_icon} alt='' />
                         Search
