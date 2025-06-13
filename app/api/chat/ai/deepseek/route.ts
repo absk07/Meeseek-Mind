@@ -46,9 +46,12 @@ export async function POST(req: NextRequest) {
         chat?.messages.push(userPrompt);
         // console.log(chat)
 
+        // console.log(prompt)
+        // console.log(model)
+
         // call deepseek api
         const completion = await openai.chat.completions.create({
-            model: model || 'deepseek/deepseek-r1-distill-qwen-7b',
+            model: model || 'deepseek/deepseek-r1-0528-qwen3-8b:free',
             messages: [{ role: 'user', content: prompt }],
             store: true
         });
@@ -69,10 +72,10 @@ export async function POST(req: NextRequest) {
             'data': chat
         });
     } catch(err) {
-        console.log(err);
+        console.error(err);
         return NextResponse.json({
             'success': false,
-            'message': err
+            'message': 'Something went wrong!'
         });
     }
 }

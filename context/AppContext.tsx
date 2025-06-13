@@ -48,7 +48,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const [ chats, setChats ] = useState<Chat[]>([]);
     const [ selectedChat, setSelectedChat ] = useState<Chat |null>(null);
 
-    const [selectedModel, setSelectedModel] = useState<string>('deepseek/deepseek-r1-distill-qwen-7b');
+    const [selectedModel, setSelectedModel] = useState<string>('deepseek/deepseek-r1-0528-qwen3-8b:free');
 
     const createNewChat = async (): Promise<void> => {
         try {

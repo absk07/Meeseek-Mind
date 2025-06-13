@@ -1,10 +1,10 @@
-import React, { JSX, useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { assets } from "@/assets/assets";
-import { useAppContext } from "@/context/AppContext";
-import axios from "axios";
-import toast from "react-hot-toast";
-import ConfirmModal from "./ConfirmModal";
+import React, { JSX, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { assets } from '@/assets/assets';
+import { useAppContext } from '@/context/AppContext';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import ConfirmModal from './ConfirmModal';
 
 interface OpenMenuType {
   id: string;
@@ -19,7 +19,7 @@ interface ChatLabelProps {
 }
 
 const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Element => {
-  const { getChats, chats, setSelectedChat } = useAppContext();
+  const { getChats, chats, selectedChat, setSelectedChat } = useAppContext();
 
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -38,7 +38,7 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
   const handleRename = async () => {
     if (!editName || editName === name) return setIsEditing(false);
     try {
-      const { data } = await axios.post("/api/chat/rename", {
+      const { data } = await axios.post('/api/chat/rename', {
         chatId: id,
         name: editName,
       });
@@ -53,21 +53,21 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
         toast.error(err.message);
         console.error(err);
       } else {
-        toast.error("An unknown error occurred.");
-        console.error("Unknown error:", err);
+        toast.error('An unknown error occurred.');
+        console.error('Unknown error:', err);
       }
     } finally {
       setIsEditing(false);
-      setOpenMenu({ id: "0", open: false });
+      setOpenMenu({ id: '0', open: false });
     }
   };
 
   const deleteChat = async () => {
     try {
-      const { data } = await axios.post("/api/chat/delete", { chatId: id });
+      const { data } = await axios.post('/api/chat/delete', { chatId: id });
       if (data.success) {
         await getChats();
-        setOpenMenu({ id: "0", open: false });
+        setOpenMenu({ id: '0', open: false });
         toast.success(data.message);
       } else {
         toast.error(data.message);
@@ -77,8 +77,8 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
           toast.error(err.message);
           console.error(err);
       } else {
-        toast.error("An unknown error occurred.");
-        console.error("Unknown error:", err);
+        toast.error('An unknown error occurred.');
+        console.error('Unknown error:', err);
       }
     }
   };
@@ -91,13 +91,13 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
         menuRef.current &&
         !menuRef.current.contains(event.target as Node)
       ) {
-        setOpenMenu({ id: "0", open: false });
+        setOpenMenu({ id: '0', open: false });
         setIsEditing(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [openMenu, id]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [openMenu, id, setOpenMenu]);
 
   useEffect(() => {
     if (isEditing) {
@@ -108,9 +108,9 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
   return (
     <div
       onClick={selectChat}
-      className="flex items-center justify-between p-2 text-white/80 hover:bg-white/10 rounded-lg text-sm group cursor-pointer"
+      className={`flex items-center justify-between p-2 my-1 text-white/80 hover:bg-white/10 rounded-lg text-sm group cursor-pointer ${selectedChat?._id === id ? 'bg-white/10' : ''}`}
     >
-      <div className="truncate max-w-[80%] group-hover:text-white">
+      <div className='truncate max-w-[80%] group-hover:text-white'>
         {isEditing ? (
           <input
             ref={inputRef}
@@ -118,13 +118,13 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
             onChange={(e) => setEditName(e.target.value)}
             onBlur={handleRename}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleRename();
-              if (e.key === "Escape") {
+              if (e.key === 'Enter') handleRename();
+              if (e.key === 'Escape') {
                 setIsEditing(false);
                 setEditName(name);
               }
             }}
-            className="bg-transparent border border-white/30 rounded px-4 py-2 w-full text-white outline-none w-full"
+            className='bg-transparent border border-white/30 rounded px-4 py-2 text-white outline-none w-full'
           />
         ) : (
           <p>{name}</p>
@@ -137,30 +137,33 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
           e.stopPropagation();
           setOpenMenu((prev) => ({ id, open: prev.id !== id || !prev.open }));
         }}
-        className="group relative flex items-center justify-center h-6 w-6 aspect-square hover:bg-black/80 rounded-lg"
+        className='group relative flex items-center justify-center h-6 w-6 aspect-square hover:bg-[#212327] rounded-xl'
       >
         <Image
-          className={`w-4 ${openMenu.id === id && openMenu.open ? "" : "hidden"
-            } group-hover:block`}
+          className='w-4 block sm:hidden'
           src={assets.three_dots}
-          alt=""
+          alt=''
+        />
+        <Image
+          className={`w-4 hidden sm:${openMenu.id === id && openMenu.open ? '' : 'block'} group-hover:block`}
+          src={assets.three_dots}
+          alt=''
         />
         <div
-          className={`${openMenu.id === id && openMenu.open ? "block" : "hidden"
-            } absolute -right-26 top-6 bg-gray-700 rounded-xl w-max p-2`}
+          className={`${openMenu.id === id && openMenu.open ? 'block' : 'hidden'} absolute -right-26 top-6 bg-gray-700 rounded-xl w-max p-2 z-1`}
         >
           <div
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-3 hover:bg-white/10 px-3 py-2 rounded-lg"
+            className='flex items-center gap-3 hover:bg-white/10 px-3 py-2 rounded-lg'
           >
-            <Image className="w-4" src={assets.pencil_icon} alt="" />
+            <Image className='w-4' src={assets.pencil_icon} alt='' />
             <p>Rename</p>
           </div>
           <div
             onClick={() => setShowConfirm(true)}
-            className="flex items-center gap-3 hover:bg-white/10 px-3 py-2 rounded-lg"
+            className='flex items-center gap-3 hover:bg-white/10 px-3 py-2 rounded-lg'
           >
-            <Image className="w-4" src={assets.delete_icon} alt="" />
+            <Image className='w-4' src={assets.delete_icon} alt='' />
             <p>Delete</p>
           </div>
         </div>
@@ -172,7 +175,7 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
           setShowConfirm(false);
           deleteChat();
         }}
-        message="Are you sure you want to delete this chat?"
+        message='Are you sure you want to delete this chat?'
       />
     </div>
   );

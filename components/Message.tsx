@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React, { JSX, useState } from 'react';
 import Image from 'next/image';
 import { assets } from '@/assets/assets';
 import Markdown from 'react-markdown';
@@ -11,6 +11,9 @@ interface MessageProps {
 }
 
 const Message = ({ role, content }: MessageProps): JSX.Element => {
+
+    const [ like, setLike ] = useState<boolean>(false);
+    const [ dislike, setDislike ] = useState<boolean>(false);
 
     const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
@@ -98,8 +101,8 @@ const Message = ({ role, content }: MessageProps): JSX.Element => {
                                     <>
                                         <Image onClick={() => copyToClipboard(content)} className='w-4.5 cursor-pointer' src={assets.copy_icon} alt='' />
                                         <Image className='w-4 cursor-pointer' src={assets.regenerate_icon} alt='' />
-                                        <Image className='w-4 cursor-pointer' src={assets.like_icon} alt='' />
-                                        <Image className='w-4 cursor-pointer' src={assets.dislike_icon} alt='' />
+                                        <Image onClick={() => { setLike(!like); setDislike(false) }} className='w-4 cursor-pointer' src={like ? assets.like_icon_fill : assets.like_icon} alt='' />
+                                        <Image onClick={() => { setDislike(!dislike); setLike(false) }} className='w-4 cursor-pointer' src={dislike ? assets.dislike_icon_fill : assets.dislike_icon} alt='' />
                                     </>
                                 )
                             }

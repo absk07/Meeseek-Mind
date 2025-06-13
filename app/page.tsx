@@ -18,7 +18,7 @@ export default function Home(): JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
-  const { selectedChat } = useAppContext();
+  const { selectedChat, createNewChat } = useAppContext();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +48,7 @@ export default function Home(): JSX.Element {
               src={assets.hamburger_sidebar_open} 
               alt='' 
             />
-            <Image className='opacity-70' src={assets.new_chat} alt='' />
+            <Image onClick={createNewChat} className='opacity-70' src={assets.new_chat} alt='' />
           </div>
           {
             messages.length === 0 ? (
