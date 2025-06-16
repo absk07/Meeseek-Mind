@@ -75,12 +75,14 @@ export default function Home(): JSX.Element {
                   isLoading && (
                     <div className='flex gap-4 max-w-3xl w-full py-3'>
                       <Image src={assets.logo_icon} alt='Logo' className='h-9 w-9 p-1 border border-white/15 rounded-full' />
-                      <div className='loader flex justify-center items-center gap-1'>
-                        <div className='w-1 h-1 rounded-full bg-white animate-bounce'></div>
-                        <div className='w-1 h-1 rounded-full bg-white animate-bounce'></div>
-                        <div className='w-1 h-1 rounded-full bg-white animate-bounce'></div>
+                      <div className='relative pacman'>
+                        <div className='pacman-top'></div>
+                        <div className='pacman-bottom'></div>
+                        <div className='dot delay-0'></div>
+                        <div className='dot delay-1'></div>
+                        <div className='dot delay-2'></div>
                       </div>
-                    </div>
+                    </div> 
                   )
                 }
               </div>

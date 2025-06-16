@@ -43,3 +43,86 @@ pre {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
+.dot {
+  position: absolute;
+  top: 0.4rem;
+  left: 6rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: white;
+  border-radius: 9999px;
+  animation: dotMove 1.5s linear infinite;
+  opacity: 0;
+}
+
+.delay-0 { animation-delay: 0s; }
+.delay-1 { animation-delay: 0.5s; }
+.delay-2 { animation-delay: 1.0s; }
+
+@keyframes dotMove {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-6rem);
+    opacity: 0;
+  }
+}
+
+.pacman{
+  margin:4px 1px;
+}
+
+.pacman-top{
+  background-color: yellow;
+  height:10px;
+  width:20px;
+  border-radius:100px 100px 0 0;
+  animation: spin1 0.5s infinite linear;
+}
+
+.pacman-bottom{
+  background-color: yellow;
+  height:10px;
+  width:20px;
+  border-radius:0 0 100px 100px;
+  animation: spin2 0.5s infinite linear;
+}  
+
+@keyframes spin1 {
+	0%  {transform: rotate(0deg);}
+	50%{transform: rotate(-35deg);}
+  
+}
+@keyframes spin2 {
+	0%  {transform: rotate(0deg);}
+  50%{transform: rotate(35deg);}	
+}
+
+@-moz-keyframes spin1 {
+	0%  {transform: rotate(0deg);}
+	50%{transform: rotate(-35deg);}
+  
+}
+@-moz-keyframes spin2 {
+	0%  {transform: rotate(0deg);}
+  50%{transform: rotate(35deg);}	
+}
+
+@-webkit-keyframes spin1 {
+	0%  {transform: rotate(0deg);}
+	50%{transform: rotate(-35deg);}
+  
+}
+@-webkit-keyframes spin2 {
+	0%  {transform: rotate(0deg);}
+  50%{transform: rotate(35deg);}	
+}
