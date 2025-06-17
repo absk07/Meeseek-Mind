@@ -22,8 +22,8 @@ const Sidebar = ({ expand, setExpand }: SidebarProps): JSX.Element => {
             <div>
                 <div className={`flex ${expand ? 'flex-row gap-10' : 'flex-col items-center gap-8'}`}>
                     <Image
-                        className={expand ? 'w-36' : 'w-10'}
-                        src={expand ? assets.logo_text : assets.logo_icon}
+                        className={expand ? 'w-36' : 'w-8'}
+                        src={expand ? assets.meeseekmind_text : assets.meeseek}
                         alt=''  
                     />
                     <div onClick={() => expand ? setExpand(false) : setExpand(true)} className='group relative flex items-center justify-center hover:bg-gray-500/20 transition-all duration-300 h-9 w-9 aspect-square rounded-lg cursor-pointer'>
@@ -42,16 +42,16 @@ const Sidebar = ({ expand, setExpand }: SidebarProps): JSX.Element => {
                         </div>
                     </div>
                 </div>
-                <button onClick={createNewChat} className={`mt-8 flex items-center justify-center cursor-pointer ${expand ? 'bg-cyan-400 hover:opacity-90 rounded-2xl gap-2 p-2.5 w-max' : 'group relative h-9 w-9 mx-auto hover:bg-gray-500/30 rounded-lg'}`}>
-                    <Image className={expand ? 'w-6' : 'w-7'} src={expand ? assets.new_chat_icon : assets.new_chat_icon_dull} alt='' />
+                <div onClick={createNewChat} className={`mt-8 flex items-center justify-center cursor-pointer ${expand ? 'gap-2 p-2.5 w-max hover:bg-gray-500/30 rounded-lg' : 'group relative h-9 w-9 mx-auto hover:bg-gray-500/30 rounded-lg'}`}>
+                    <Image className={expand ? 'w-6' : 'w-7'} src={expand ? assets.new_chat_icon_dull : assets.new_chat_icon_dull} alt='' />
                     <div className='absolute w-max -top-12 -right-12 opacity-0 group-hover:opacit-100 transition bg-black text-white text-sm px-3 py-2 rounded-lg shadow-lg pointer-events-none'>
                         New Chat
                         <div className='w-3 h-3 absolute bg-black rotate-45 left-4 -bottom-1.5'></div>
                     </div>
                     {
-                        expand && <p className='text-white text font-medium'>New Chat</p>
+                        expand && <p className='text-[#90959f] text font-medium'>New Chat</p>
                     }
-                </button>
+                </div>
                 <div className={`mt-8 text-white/25 text-sm ${expand ? 'block' : 'hidden'}`}>
                     <p className='my-1'>Recent Chats</p>
                     {

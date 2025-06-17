@@ -74,7 +74,7 @@ export default function Home(): JSX.Element {
                 {
                   isLoading && (
                     <div className='flex gap-4 max-w-3xl w-full py-3'>
-                      <Image src={assets.logo_icon} alt='Logo' className='h-9 w-9 p-1 border border-white/15 rounded-full' />
+                      <Image src={assets.meeseek} alt='Logo' className='h-9 w-9 p-1 rounded-full' />
                       <div className='relative pacman'>
                         <div className='pacman-top'></div>
                         <div className='pacman-bottom'></div>

@@ -95,7 +95,7 @@ const Message = ({ role, content }: MessageProps): JSX.Element => {
                                 role === 'user' ? (
                                     <>
                                         <Image onClick={() => copyToClipboard(content)} className='w-4 cursor-pointer' src={assets.copy_icon} alt='' />
-                                        <Image className='w-4.5 cursor-pointer' src={assets.pencil_icon} alt='' />
+                                        {/* <Image className='w-4.5 cursor-pointer' src={assets.pencil_icon} alt='' /> */}
                                     </>
                                 ) : (
                                     <>
@@ -113,7 +113,7 @@ const Message = ({ role, content }: MessageProps): JSX.Element => {
                             <span className='text-white/90'>{content}</span>
                         ) : (
                             <>
-                                <Image className='h-9 w-9 p-1 border border-white/15 rounded-full' src={assets.logo_icon} alt='' />
+                                <Image className='h-9 w-9 p-1 rounded-full' src={assets.meeseek} alt='' />
                                 <div className='space-y-4 w-full overflow-scroll prose prose-invert max-w-none'>
                                     <Markdown 
                                         rehypePlugins={[rehypeHighlight]} 

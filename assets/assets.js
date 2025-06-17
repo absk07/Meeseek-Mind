@@ -1,7 +1,5 @@
 import arrow_icon from "./arrow_icon.svg";
 import arrow_icon_dull from "./arrow_icon_dull.svg";
-import logo_text from "./logo_text.svg";
-import logo_icon from "./logo_icon.svg";
 import menu_icon from "./menu_icon.svg";
 import search_icon from "./search_icon.svg";
 import profile_icon from "./profile_icon.svg";
@@ -20,7 +18,6 @@ import sidebar_icon from "./sidebar_icon.svg";
 import sidebar_close_icon from "./sidebar_close_icon.svg";
 import chat_icon_dull from "./chat_icon_dull.svg";
 import three_dots from "./three_dots.svg";
-import new_icon from "./new_icon.svg";
 
 import hamburger_sidebar_open from "./hamburger-sidebar-open.svg";
 import hamburger_open from "./hamburger-open.svg";
@@ -34,6 +31,8 @@ import enter_icon_active from "./enter-active.svg";
 import cross_icon from "./cross.svg"
 import like_icon_fill from "./like_icon_fill.svg"
 import dislike_icon_fill from "./dislike-icon-fill.svg"
+import meeseek from "./meeseek.png";
+import meeseekmind_text from "./meeseekmind-text.png";
 
 export const assets = {
   hamburger_sidebar_open,
@@ -48,11 +47,11 @@ export const assets = {
   cross_icon,
   like_icon_fill,
   dislike_icon_fill,
+  meeseek,
+  meeseekmind_text,
 
   arrow_icon,
   arrow_icon_dull,
-  logo_text,
-  logo_icon,
   menu_icon,
   search_icon,
   profile_icon,
@@ -70,6 +69,5 @@ export const assets = {
   sidebar_icon,
   sidebar_close_icon,
   chat_icon_dull,
-  three_dots,
-  new_icon,
+  three_dots
 };

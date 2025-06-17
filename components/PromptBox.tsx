@@ -68,7 +68,7 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                 }
             });
 
-            const { data } = await axios.post('/api/chat/ai/deepseek', {
+            const { data } = await axios.post('/api/chat/ai', {
                 chatId: selectedChat?._id,
                 prompt,
                 model: selectedModel
@@ -206,6 +206,7 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                                     onClick={() => {
                                         setSelectedModel(model.id);
                                         setModelDropdownOpen(false);
+                                        toast.success(`Model switched - ${model.label}`)
                                     }}
                                     className='px-4 py-2 hover:bg-[#404045] cursor-pointer rounded-xl'>
                                     {model.label}
@@ -220,7 +221,7 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                 </div>
                 <div className='flex items-center gap-2'>
                     <Image className='w-4 cursor-pointer' src={assets.pin_icon} alt='' />
-                    <button className={`${prompt ? 'bg-cyan-400' : 'bg-[#71717a]'} rounded-full p-2 cursor-pointer`}>
+                    <button className={`${prompt ? 'bg-[#559CBD]' : 'bg-[#71717a]'} rounded-full p-2 cursor-pointer`}>
                         <Image className='w-3.5 aspect-square' src={prompt ? assets.enter_icon_active : assets.enter_icon} alt='' />
                     </button>
                 </div>

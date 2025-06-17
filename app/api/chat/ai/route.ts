@@ -49,9 +49,9 @@ export async function POST(req: NextRequest) {
         // console.log(prompt)
         // console.log(model)
 
-        // call deepseek api
+        // call ai model api
         const completion = await openai.chat.completions.create({
-            model: model || 'deepseek/deepseek-r1-0528-qwen3-8b:free',
+            model: model,
             messages: [{ role: 'user', content: prompt }],
             store: true
         });
