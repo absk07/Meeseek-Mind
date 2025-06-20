@@ -51,10 +51,10 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
     } catch (err: unknown) {
       if (err instanceof Error) {
         toast.error(err.message);
-        console.error(err);
+        // console.error(err);
       } else {
         toast.error('An unknown error occurred.');
-        console.error('Unknown error:', err);
+        // console.error('Unknown error:', err);
       }
     } finally {
       setIsEditing(false);
@@ -75,10 +75,10 @@ const ChatLabel = ({ openMenu, setOpenMenu, id, name }: ChatLabelProps): JSX.Ele
     } catch (err: unknown) {
         if (err instanceof Error) {
           toast.error(err.message);
-          console.error(err);
+          // console.error(err);
       } else {
         toast.error('An unknown error occurred.');
-        console.error('Unknown error:', err);
+        // console.error('Unknown error:', err);
       }
     }
   };

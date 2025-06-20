@@ -26,7 +26,7 @@ export default async function connectDB(): Promise<Connection | null> {
         cached.conn = mongooseInstance.connection;
     } catch(err) {
         cached.promise = null;
-        console.error("Error connecting to DB", err)
+        // console.error("Error connecting to DB", err)
     }
     global.mongoose = cached;
     return cached.conn;

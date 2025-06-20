@@ -63,15 +63,15 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
             });
 
             if(data.success) {
-                console.log(data);
+                // console.log(data);
                 toast.success(data.message);
                 await getChats();
             } else {
-                console.log(data);
+                // console.log(data);
                 toast.error(data.message);
             }
         } catch (err: any) {
-            console.error(err);
+            // console.error(err);
             toast.error(err.message);
         }
     }
@@ -85,25 +85,25 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
             });
 
             if(data.success) {
-                // console.log(data);
+                // // console.log(data);
                 const chatList: Chat[] = data.data;
                 chatList?.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
                 setChats(chatList);
 
                 if(chatList.length === 0) {
-                    // console.log('AppContext')
+                    // // console.log('AppContext')
                     await createNewChat();
                     getChats();
                 } else {
-                    // console.log(chatList[0]);
+                    // // console.log(chatList[0]);
                     setSelectedChat(chatList[0]);
                 }
             } else {
-                console.log(data);
+                // console.log(data);
                 toast.error(data.message);
             }
         } catch (err: any) {
-            console.error(err);
+            // console.error(err);
             toast.error(err.message);
         }
     }

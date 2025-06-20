@@ -40,11 +40,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     let event: { data: ClerkUserPayload; type: string };
     try {
         const payload = await req.json();
-        console.log(payload)
+        // console.log(payload)
         const body = JSON.stringify(payload)
         event = wh.verify(body, svixHeaders) as { data: ClerkUserPayload; type: string }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         return NextResponse.json({ 
             error: err 
         });
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const { data, type } = event;
 
-    console.log({user_data: data, event_type: type})
+    // console.log({user_data: data, event_type: type})
     
     // save user data in db
     const userData: userDataInterface = {
@@ -62,14 +62,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         image: data.image_url
     };
 
-    console.log(userData)
+    // console.log(userData)
 
     await connectDB();
 
     switch(type) {
         case 'user.created':
-            const u = await User.create(userData);
-            console.log('User created', u)
+            await User.create(userData);
+            // console.log('User created', u)
             break;
         case 'user.updated':
             await User.findByIdAndUpdate(data.id, userData);

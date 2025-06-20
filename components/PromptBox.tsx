@@ -74,23 +74,23 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                 model: selectedModel
             });
 
-            // console.log('api data', data)
+            // // console.log('api data', data)
 
             if(data.success) {
-                // console.log('inside data.success')
-                // console.log('before setChats', chats)
+                // // console.log('inside data.success')
+                // // console.log('before setChats', chats)
                 setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat?._id ? {
                     ...chat,
                     messages: [...chat.messages, data.data.messages.slice(-1)[0]]
                 } : chat
                 ));
-                // console.log('after setChats', chats)
+                // // console.log('after setChats', chats)
 
 
                 const msg = data?.data?.messages?.slice(-1)[0].content;
-                // console.log('real msg', msg)
+                // // console.log('real msg', msg)
                 const msgTokens = msg?.split(' ');
-                // console.log('token msg', msgTokens)
+                // // console.log('token msg', msgTokens)
 
                 const assistantMsg: promptInterface = {
                     role: 'assistant',
@@ -121,18 +121,18 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
                     }, i * 80)
                 }
             } else {
-                console.log(data);
+                // console.log(data);
                 toast.error(data.message);
                 setPrompt(promptCopy);
             }
         } catch (err: unknown) {
             if (err instanceof Error) {
                 toast.error('Server Error!');
-                console.error(err);
+                // console.error(err);
                 setPrompt(promptCopy);
             } else {
                 toast.error('An unknown error occurred.');
-                console.error('Unknown error:', err);
+                // console.error('Unknown error:', err);
             }
         } finally {
             setIsLoading(false);
@@ -151,7 +151,7 @@ const PromptBox = ({ isLoading, setIsLoading }: PromptBoxProps): JSX.Element => 
             const rect = buttonRef.current.getBoundingClientRect();
             const spaceBelow = window.innerHeight - rect.bottom;
             setDropUp(spaceBelow < 250); // 150px: estimated dropdown height
-            // console.log(dropUp)
+            // // console.log(dropUp)
         }
         setModelDropdownOpen(prev => !prev);
     }

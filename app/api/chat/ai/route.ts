@@ -44,10 +44,10 @@ export async function POST(req: NextRequest) {
         };
         
         chat?.messages.push(userPrompt);
-        // console.log(chat)
+        // // console.log(chat)
 
-        // console.log(prompt)
-        // console.log(model)
+        // // console.log(prompt)
+        // // console.log(model)
 
         // call ai model api
         const completion = await openai.chat.completions.create({
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
             store: true
         });
 
-        // console.log(completion.choices[0].message);
+        // // console.log(completion.choices[0].message);
 
         const assistantMsg: promptInterface = {
             role: completion.choices[0].message.role,
@@ -71,8 +71,8 @@ export async function POST(req: NextRequest) {
             'success': true,
             'data': chat
         });
-    } catch(err) {
-        console.error(err);
+    } catch(err) { // eslint-disable-line @typescript-eslint/no-unused-vars
+        // console.error(err);
         return NextResponse.json({
             'success': false,
             'message': 'Something went wrong!'
