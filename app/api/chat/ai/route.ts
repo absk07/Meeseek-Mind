@@ -46,8 +46,8 @@ export async function POST(req: NextRequest) {
         chat?.messages.push(userPrompt);
         // // console.log(chat)
 
-        console.log('prompt', prompt)
-        console.log('model', model)
+        // console.log('prompt', prompt)
+        // console.log('model', model)
 
         // call ai model api
         const completion = await openai.chat.completions.create({
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
             store: true
         });
 
-        console.log('completion', completion.choices[0].message);
+        // console.log('completion', completion.choices[0].message);
 
         const assistantMsg: promptInterface = {
             role: completion.choices[0].message.role,
